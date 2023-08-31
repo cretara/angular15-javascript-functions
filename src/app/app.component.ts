@@ -5,23 +5,16 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit{
-  title = 'angular15-javascript-functions';
+export class AppComponent implements OnInit {
+  private jsFunctionCustom = Function(
+    '{var a = document.querySelector("#test");console.debug(a);a.style.visibility = "hidden";return a.value !== "0"}'
+  );
 
-  private jsFunctionCustom =
-    'function custom() {var a = document.querySelector("test");return a.value !== "0"}';
-
-  private jsFunctionGeneral =
-    'function general() {var a = "Hello world!"; return a}';
-
-
-    constructor(){
-      eval(this.jsFunctionCustom);
-      eval(this.jsFunctionGeneral);
-    }
+  private jsFunctionGeneral = Function('{var a = "Hello world!"; return a}');
 
   ngOnInit(): void {
-    const result = Function('{var a = "Hello world!"; return a}');
-    console.debug(result());
+    console.debug(this.jsFunctionGeneral());
+    const returnValueCustomFunction = this.jsFunctionCustom();
+    console.debug(returnValueCustomFunction);
   }
 }
